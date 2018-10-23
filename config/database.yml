@@ -23,13 +23,13 @@
 
   development:
     <<: *default
-    database: foo_development
+    database: mississippi_dot_com_development
 
     # The specified database role being used to connect to postgres.
     # To create additional roles in postgres see `$ createuser --help`.
     # When left blank, postgres will use the default role. This is
     # the same name as the operating system user that initialized the database.
-    #username: foo
+    #username: mississippi_dot_com
 
     # The password associated with the postgres role (username).
     #password:
@@ -57,7 +57,7 @@
   # Do not set this db to the same as development or production.
   test:
     <<: *default
-    database: foo_test
+    database: mississippi_dot_com_test
 
   # As with config/secrets.yml, you never want to store sensitive information,
   # like your database password, in your source code. If your source code is
@@ -80,6 +80,6 @@
   #
   production:
     <<: *default
-    database: foo_production
-    username: foo
-    password: <%= ENV['FOO_DATABASE_PASSWORD'] %>
+    database: mississippi_dot_com_production
+    username: mississippi_dot_com
+    password: <%= ENV['MISSISSIPPI_DOT_COM_DATABASE_PASSWORD'] %>
