@@ -9,3 +9,11 @@ $ bundle install
 $ rails db:setup
 $ rails server
 ```
+
+# Testing
+
+To run the test suite, run:
+
+```
+$ rspec
+```
