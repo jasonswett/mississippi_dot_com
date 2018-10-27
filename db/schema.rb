@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_155413) do
+ActiveRecord::Schema.define(version: 2018_10_27_145134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plperl"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 2018_10_23_155413) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "price_cents", null: false
+    t.date "date_published", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_books_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
