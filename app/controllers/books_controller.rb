@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  before_action :set_authors, only: [:new, :edit, :update, :create]
+  before_action :set_author_options, only: [:new, :edit, :update, :create]
 
   # GET /books
   # GET /books.json
@@ -68,8 +68,10 @@ class BooksController < ApplicationController
       @book = Book.find(params[:id])
     end
 
-    def set_authors
-      @authors = Author.all
+    def set_author_options
+      @author_options = Author.all.collect do |author|
+        [ author.name, author.id ]
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
