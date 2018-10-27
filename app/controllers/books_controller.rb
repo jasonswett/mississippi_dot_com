@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  before_action :set_authors, only: [:new, :create]
+  before_action :set_authors, only: [:new, :edit, :update, :create]
 
   # GET /books
   # GET /books.json
