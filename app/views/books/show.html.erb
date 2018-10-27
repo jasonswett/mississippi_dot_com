@@ -6,8 +6,8 @@
 </p>
 
 <p>
-  <strong>Price cents:</strong>
-  <%= @book.price_cents %>
+  <strong>Price:</strong>
+  <%= number_to_currency(@book.price) %>
 </p>
 
 <p>
