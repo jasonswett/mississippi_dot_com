@@ -70,7 +70,7 @@ class BooksController < ApplicationController
 
     def set_author_options
       @author_options = Author.all.collect do |author|
-        [ author.name, author.id ]
+        [author.name, author.id]
       end
     end
 
