@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_authors, only: [:new, :create]
 
   # GET /books
   # GET /books.json
@@ -15,7 +16,6 @@ class BooksController < ApplicationController
   # GET /books/new
   def new
     @book = Book.new
-    @authors = Author.all
   end
 
   # GET /books/1/edit
@@ -66,6 +66,10 @@ class BooksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])
+    end
+
+    def set_authors
+      @authors = Author.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
