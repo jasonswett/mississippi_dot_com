@@ -17,6 +17,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :author_ids, 'Author(s)' %>
+    <%= form.select :author_ids, @authors.collect { |author| [ author.name, author.id ] }, {}, { multiple: true, size: 10 } %>
+  </div>
+
+  <div class="field">
     <%= form.label :price %>
     <%= form.text_field :price %>
   </div>

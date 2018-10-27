@@ -15,5 +15,10 @@
   <%= @book.date_published %>
 </p>
 
+<p>
+  <strong>Author(s):</strong>
+  <%= @book.author_names %>
+</p>
+
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>
