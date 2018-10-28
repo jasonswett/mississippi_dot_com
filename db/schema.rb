@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_27_170501) do
+ActiveRecord::Schema.define(version: 2018_10_28_123133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plperl"
@@ -42,6 +42,21 @@ ActiveRecord::Schema.define(version: 2018_10_27_170501) do
     t.index ["name"], name: "index_books_on_name", unique: true
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_customers_on_email", unique: true
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -56,4 +71,5 @@ ActiveRecord::Schema.define(version: 2018_10_27_170501) do
 
   add_foreign_key "authorships", "authors"
   add_foreign_key "authorships", "books"
+  add_foreign_key "orders", "customers"
 end
