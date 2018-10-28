@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
-  before_action :set_book_options, only: [:new]
+  before_action :set_book_options, only: [:new, :edit, :update, :create]
 
   # GET /orders
   # GET /orders.json
@@ -26,8 +26,7 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = OrderFactory.build(
-      customer_email: params[:order][:customer_email],
-      book_ids: param[:order][:book_ids]
+      customer_email: params[:order][:customer_email]
     )
 
     respond_to do |format|
