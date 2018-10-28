@@ -24,8 +24,9 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    customer = Customer.find_or_create_by(email: params[:order][:customer_email])
-    @order = customer.orders.new(order_params)
+    @order = OrderFactory.build(
+      customer_email: params[:order][:customer_email]
+    )
 
     respond_to do |format|
       if @order.save
