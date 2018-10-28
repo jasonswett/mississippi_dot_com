@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature 'Create order', type: :feature do
+  scenario 'customer email is missing' do
+    visit new_order_path
+    click_on 'Create Order'
+    expect(page).to have_content("Customer can't be blank")
+  end
+
   scenario 'customer exists' do
     create(:customer, email: 'test@example.com')
     visit customers_path
