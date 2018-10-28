@@ -16,6 +16,11 @@
     <%= form.text_field :customer_email %>
   </div>
 
+  <div class="field">
+    <%= form.label :book_ids, 'Book(s)' %>
+    <%= form.select :book_ids, @book_options, {}, { multiple: true, size: 10 } %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

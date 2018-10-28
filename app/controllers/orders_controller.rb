@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_book_options, only: [:new]
 
   # GET /orders
   # GET /orders.json
@@ -25,7 +26,8 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = OrderFactory.build(
-      customer_email: params[:order][:customer_email]
+      customer_email: params[:order][:customer_email],
+      book_ids: param[:order][:book_ids]
     )
 
     respond_to do |format|
@@ -67,6 +69,12 @@ class OrdersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params[:id])
+    end
+
+    def set_book_options
+      @book_options = Book.all.collect do |book|
+        [book.name, book.id]
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
