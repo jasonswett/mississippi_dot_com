@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Line Items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Book</th>
+      <th>Quantity</th>
+      <th>Total amount cents</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @line_items.each do |line_item| %>
+      <tr>
+        <td><%= line_item.order %></td>
+        <td><%= line_item.book %></td>
+        <td><%= line_item.quantity %></td>
+        <td><%= line_item.total_amount_cents %></td>
+        <td><%= link_to 'Show', line_item %></td>
+        <td><%= link_to 'Edit', edit_line_item_path(line_item) %></td>
+        <td><%= link_to 'Destroy', line_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Line Item', new_line_item_path %>

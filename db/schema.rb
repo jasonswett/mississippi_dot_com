@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_28_123133) do
+ActiveRecord::Schema.define(version: 2018_10_28_154002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plperl"
@@ -49,6 +49,18 @@ ActiveRecord::Schema.define(version: 2018_10_28_123133) do
     t.index ["email"], name: "index_customers_on_email", unique: true
   end
 
+  create_table "line_items", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "book_id", null: false
+    t.integer "quantity", default: 1, null: false
+    t.integer "total_amount_cents", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_line_items_on_book_id"
+    t.index ["order_id", "book_id"], name: "index_line_items_on_order_id_and_book_id", unique: true
+    t.index ["order_id"], name: "index_line_items_on_order_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.bigint "customer_id", null: false
     t.datetime "created_at", null: false
@@ -70,5 +82,7 @@ ActiveRecord::Schema.define(version: 2018_10_28_123133) do
 
   add_foreign_key "authorships", "authors"
   add_foreign_key "authorships", "books"
+  add_foreign_key "line_items", "books"
+  add_foreign_key "line_items", "orders"
   add_foreign_key "orders", "customers"
 end
