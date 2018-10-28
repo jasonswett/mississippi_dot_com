@@ -9,30 +9,30 @@ RSpec.describe OrderFactory, type: :model do
       expect(order).to be_persisted
     end
 
-    context 'build' do
-      it 'creates line items' do
-        book = create(:book)
+    context 'with line items' do
+      let(:book) { create(:book) }
 
-        order = OrderFactory.build(
+      let(:order) do
+        OrderFactory.build(
           customer_email: 'test@example.com',
           book_ids: [book.id]
         )
-
-        expect(order.line_items.first.book.id).to eq(book.id)
       end
-    end
 
-    context 'create' do
-      it 'saves line items' do
-        book = create(:book)
+      context 'order is not persisted' do
+        it 'creates line items' do
+          expect(order).not_to be_persisted
+          expect(order.line_items.first.book.id).to eq(book.id)
+        end
+      end
 
-        order = OrderFactory.build(
-          customer_email: 'test@example.com',
-          book_ids: [book.id]
-        )
-        order.save!
+      context 'order is persisted' do
+        before { order.save! }
 
-        expect(order.line_items.first.book.id).to eq(book.id)
+        it 'saves line items' do
+          expect(order).to be_persisted
+          expect(order.line_items.first.book.id).to eq(book.id)
+        end
       end
     end
   end
