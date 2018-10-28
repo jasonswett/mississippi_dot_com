@@ -10,6 +10,13 @@
   </head>
 
   <body>
+    <ul>
+      <li><%= link_to 'Orders', orders_path %></li>
+      <li><%= link_to 'Books', books_path %></li>
+      <li><%= link_to 'Authors', authors_path %></li>
+      <li><%= link_to 'Customers', customers_path %></li>
+    </ul>
+
     <%= yield %>
   </body>
 </html>
