@@ -26,7 +26,8 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     @order = OrderFactory.build(
-      customer_email: params[:order][:customer_email]
+      customer_email: params[:order][:customer_email],
+      book_ids: params[:order][:book_ids]
     )
 
     respond_to do |format|

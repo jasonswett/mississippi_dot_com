@@ -3,7 +3,7 @@ class OrderFactory
     customer = Customer.find_or_create_by(email: customer_email)
     order = customer.orders.new
 
-    Book.find(book_ids).each do |book|
+    Book.find(book_ids.reject(&:blank?)).each do |book|
       order.line_items.new(
         book: book,
         total_amount_cents: 0
