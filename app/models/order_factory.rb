@@ -10,7 +10,7 @@ class OrderFactory
     Book.find(book_ids).map do |book|
       LineItem.new(
         book: book,
-        total_amount_cents: 0
+        total_amount_cents: book.price_cents
       )
     end
   end

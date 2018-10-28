@@ -24,6 +24,22 @@ RSpec.describe OrderFactory, type: :model do
       end
     end
 
+    describe 'amount' do
+      let(:book) { create(:book, price_cents: 2000) }
+
+      let(:order) do
+        OrderFactory.build(
+          customer_email: 'test@example.com',
+          book_ids: [book.id]
+        )
+      end
+
+      it 'saves the amount' do
+        order.save!
+        expect(order.line_items.first.total_amount_cents).to eq(2000)
+      end
+    end
+
     context 'with line items' do
       let(:book) { create(:book) }
 
