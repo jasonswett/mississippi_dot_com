@@ -18,6 +18,10 @@
       <li><%= link_to 'Customers', customers_path %></li>
     </ul>
 
+		<% flash.each do |name, msg| %>
+			<%= content_tag :div, msg, class: "alert alert-info" %>
+		<% end %>
+
     <%= yield %>
   </body>
 </html>
