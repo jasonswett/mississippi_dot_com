@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   belongs_to :customer
-  has_many :line_items
+  has_many :line_items, dependent: :destroy
+  has_many :books, through: :line_items
   validates :customer, presence: true
   validates :customer_id, presence: true
   monetize :total_cents

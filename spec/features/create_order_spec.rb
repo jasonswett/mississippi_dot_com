@@ -7,8 +7,8 @@ RSpec.feature 'Create order', type: :feature do
 
     visit new_order_path
     fill_in 'Customer email', with: 'test@example.com'
-    select 'Growing Object-Oriented Software, Guided by Tests', from: 'Book(s)'
-    select 'Test-Driven Development by Example', from: 'Book(s)'
+    check 'Growing Object-Oriented Software, Guided by Tests'
+    check 'Test-Driven Development by Example'
     click_on 'Create Order'
 
     visit orders_path
