@@ -46,8 +46,6 @@ RSpec.feature 'Create order', type: :feature do
     visit new_order_path
     fill_in 'Customer email', with: 'test@example.com'
     click_on 'Create Order'
-
-    visit orders_path
     expect(page).to have_content('test@example.com')
 
     visit customers_path

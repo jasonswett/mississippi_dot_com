@@ -5,7 +5,7 @@ class OrdersUserSessionsController < ApplicationController
     unless params[:customer_email].present?
       @order = Order.new
       @order.errors[:base] << "Customer can't be blank"
-      render 'orders/new'
+      render 'orders/new' and return
     end
 
     if User.exists?(email: params[:customer_email])
@@ -24,7 +24,6 @@ class OrdersUserSessionsController < ApplicationController
   def create
     sign_in_user
     save_order
-    redirect_to orders_path
   end
 
   private
@@ -41,6 +40,8 @@ class OrdersUserSessionsController < ApplicationController
       customer_email: params[:customer_email],
       book_ids: params[:order][:book_ids]
     )
+
+    redirect_to orders_path
   end
 
   def sign_in_user
