@@ -6,6 +6,10 @@ class OrderFactory
     )
   end
 
+  def self.create(customer_email:, book_ids: [])
+    build(customer_email: customer_email, book_ids: book_ids).save
+  end
+
   def self.line_items(book_ids)
     Book.find(book_ids).map do |book|
       LineItem.new(

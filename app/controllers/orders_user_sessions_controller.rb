@@ -14,11 +14,10 @@ class OrdersUserSessionsController < ApplicationController
         book_ids: @book_ids
       )
     else
-      @order = OrderFactory.build(
+      OrderFactory.create(
         customer_email: params[:customer_email],
         book_ids: params[:order][:book_ids]
       )
-      @order.save
     end
   end
 
@@ -33,11 +32,10 @@ class OrdersUserSessionsController < ApplicationController
     user = user&.valid_password?(params[:password]) ? user : nil
     sign_in(user, scope: :user)
 
-    @order = OrderFactory.build(
+    OrderFactory.create(
       customer_email: params[:customer_email],
       book_ids: params[:order][:book_ids]
     )
-    @order.save
 
     redirect_to orders_path
   end
