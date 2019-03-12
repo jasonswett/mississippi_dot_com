@@ -23,21 +23,18 @@ RSpec.feature 'Create order', type: :feature do
   end
 
   scenario 'customer exists' do
-    create(:customer, email: 'test@example.com')
-    visit customers_path
-    expect(page).to have_content('test@example.com', count: 1)
+    user = create(:user, email: 'test@example.com')
+    create(:book, name: 'Enlightenment Now')
 
-    visit orders_path
-    expect(page).not_to have_content('test@example.com')
     visit new_order_path
+    check 'Enlightenment Now'
     fill_in 'Customer email', with: 'test@example.com'
     click_on 'Create Order'
 
-    visit orders_path
-    expect(page).to have_content('test@example.com')
+    fill_in 'Password', with: user.password
+    click_on 'Create Order'
 
-    visit customers_path
-    expect(page).to have_content('test@example.com', count: 1)
+    expect(page).to have_content('Sign out')
   end
 
   scenario 'customer does not exist' do

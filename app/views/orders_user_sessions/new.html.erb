@@ -1,0 +1,14 @@
+<%= simple_form_for(@order, url: orders_user_sessions_path) do |form| %>
+  <% @book_ids.each do |id| %>
+    <%= form.hidden_field :book_ids, multiple: true, value: id %>
+  <% end %>
+
+  <%= hidden_field_tag :customer_email, @customer_email %>
+
+  <label for="password">Password</label>
+  <input id="password" name="password" type="password">
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

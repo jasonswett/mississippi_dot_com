@@ -1,4 +1,4 @@
-<%= simple_form_for(order) do |form| %>
+<%= simple_form_for(order, url: check_user_orders_user_sessions_path) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
