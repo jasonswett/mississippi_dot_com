@@ -1,4 +1,5 @@
 class OrdersUserSessionsController < ApplicationController
+  # TODO: Refactor this method
   def check_user
     @book_ids = params[:order][:book_ids].reject { |id| id == '' }
 
@@ -6,25 +7,12 @@ class OrdersUserSessionsController < ApplicationController
       allow_user_to_sign_in and return
     end
 
-    if current_user
-      @order = OrderFactory.build(
-        customer_email: current_user.email,
-        book_ids: params[:order][:book_ids]
-      )
-      @order.save
+    @order = new_order
 
+    if @order.save
       redirect_to orders_path
     else
-      @order = OrderFactory.build(
-        customer_email: params[:customer_email],
-        book_ids: params[:order][:book_ids]
-      )
-
-      if @order.save
-        redirect_to orders_path
-      else
-        render 'orders/new' and return
-      end
+      render 'orders/new' and return
     end
   end
 
@@ -36,7 +24,8 @@ class OrdersUserSessionsController < ApplicationController
 
   def create
     sign_in_user
-    save_order(params[:customer_email])
+    new_order.save
+    redirect_to orders_path
   end
 
   private
@@ -48,13 +37,11 @@ class OrdersUserSessionsController < ApplicationController
     )
   end
 
-  def save_order(customer_email)
-    OrderFactory.create(
-      customer_email: customer_email,
+  def new_order
+    OrderFactory.build(
+      customer_email: params[:customer_email] || current_user.email,
       book_ids: params[:order][:book_ids]
     )
-
-    redirect_to orders_path
   end
 
   def sign_in_user
