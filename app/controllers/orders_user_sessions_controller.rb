@@ -10,9 +10,7 @@ class OrdersUserSessionsController < ApplicationController
 
     if current_user
       save_order and return
-    end
-
-    if User.exists?(email: params[:customer_email])
+    elsif User.exists?(email: params[:customer_email])
       allow_user_to_sign_in
     else
       save_order
