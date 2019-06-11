@@ -2,10 +2,14 @@ class OrdersUserSessionsController < ApplicationController
   def check_user
     @book_ids = params[:order][:book_ids].reject { |id| id == '' }
 
-    unless params[:customer_email].present?
+    if !current_user && !params[:customer_email].present?
       @order = Order.new
       @order.errors[:base] << "Customer can't be blank"
       render 'orders/new' and return
+    end
+
+    if current_user
+      save_order and return
     end
 
     if User.exists?(email: params[:customer_email])
@@ -37,7 +41,7 @@ class OrdersUserSessionsController < ApplicationController
 
   def save_order
     OrderFactory.create(
-      customer_email: params[:customer_email],
+      customer_email: params[:customer_email] || current_user.email,
       book_ids: params[:order][:book_ids]
     )
 

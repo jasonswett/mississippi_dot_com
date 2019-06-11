@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Create order', type: :feature do
+  # TODO: break this file into multiple files
+
   scenario 'when books are selected' do
     create(:book, name: 'Growing Object-Oriented Software, Guided by Tests')
     create(:book, name: 'Test-Driven Development by Example')
@@ -22,7 +24,7 @@ RSpec.feature 'Create order', type: :feature do
     expect(page).to have_content("Customer can't be blank")
   end
 
-  scenario 'customer exists' do
+  scenario 'customer exists and is not signed in yet' do
     user = create(:user, email: 'test@example.com')
     create(:book, name: 'Enlightenment Now')
 
@@ -37,6 +39,19 @@ RSpec.feature 'Create order', type: :feature do
     expect(page).to have_content('Sign out')
   end
 
+  scenario 'customer is signed in' do
+    user = create(:user)
+    book = create(:book)
+    login_as(user)
+
+    visit new_order_path
+    check book.name
+    click_on 'Create Order'
+
+    expect(page).to have_content(user.email)
+    expect(page).to have_content(book.name)
+  end
+
   scenario 'customer does not exist' do
     visit customers_path
     expect(page).not_to have_content('test@example.com')
@@ -46,6 +61,7 @@ RSpec.feature 'Create order', type: :feature do
     visit new_order_path
     fill_in 'Customer email', with: 'test@example.com'
     click_on 'Create Order'
+
     expect(page).to have_content('test@example.com')
 
     visit customers_path

@@ -11,10 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= label_tag :customer_email %>
-    <%= text_field_tag :customer_email %>
-  </div>
+  <% unless current_user %>
+    <div class="field">
+      <%= label_tag :customer_email %>
+      <%= text_field_tag :customer_email %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.association :books, as: :check_boxes %>
