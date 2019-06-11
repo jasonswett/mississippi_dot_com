@@ -12,7 +12,7 @@ class OrdersUserSessionsController < ApplicationController
     if @order.save
       redirect_to orders_path
     else
-      render 'orders/new' and return
+      render 'orders/new'
     end
   end
 
