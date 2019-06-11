@@ -7,24 +7,25 @@ class OrdersUserSessionsController < ApplicationController
     end
 
     if current_user
-      OrderFactory.create(
+      @order = OrderFactory.build(
         customer_email: current_user.email,
         book_ids: params[:order][:book_ids]
       )
-    else
-      if !params[:customer_email].present?
-        @order = Order.new
-        @order.errors[:base] << "Customer can't be blank"
-        render 'orders/new' and return
-      end
+      @order.save
 
-      OrderFactory.create(
+      redirect_to orders_path
+    else
+      @order = OrderFactory.build(
         customer_email: params[:customer_email],
         book_ids: params[:order][:book_ids]
       )
-    end
 
-    redirect_to orders_path
+      if @order.save
+        redirect_to orders_path
+      else
+        render 'orders/new' and return
+      end
+    end
   end
 
   def new

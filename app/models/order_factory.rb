@@ -7,7 +7,14 @@ class OrderFactory
   end
 
   def self.create(customer_email:, book_ids: [])
-    build(customer_email: customer_email, book_ids: book_ids).save
+    order = build(customer_email: customer_email, book_ids: book_ids)
+    order.save
+
+    if !customer_email.present?
+      order.errors[:base] << "Customer can't be blank"
+    end
+
+    order
   end
 
   def self.line_items(book_ids)
