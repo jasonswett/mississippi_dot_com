@@ -24,6 +24,25 @@ RSpec.feature 'Create order', type: :feature do
     expect(page).to have_content("Customer can't be blank")
   end
 
+  scenario 'customer email is missing and order ultimately gets created' do
+    create(:book, name: 'Growing Object-Oriented Software, Guided by Tests')
+    create(:book, name: 'Test-Driven Development by Example')
+
+    visit new_order_path
+    fill_in 'Customer email', with: ''
+    check 'Growing Object-Oriented Software, Guided by Tests'
+    check 'Test-Driven Development by Example'
+    click_on 'Create Order'
+
+    expect(page).to have_content("Customer can't be blank")
+    fill_in 'Customer email', with: 'test@example.com'
+    click_on 'Create Order'
+
+    visit orders_path
+    expect(page).to have_content('Growing Object-Oriented Software, Guided by Tests')
+    expect(page).to have_content('Test-Driven Development by Example')
+  end
+
   scenario 'customer exists and is not signed in yet' do
     user = create(:user, email: 'test@example.com')
     create(:book, name: 'Enlightenment Now')

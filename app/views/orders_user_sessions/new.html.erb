@@ -1,5 +1,5 @@
 <%= simple_form_for(@order, url: orders_user_sessions_path) do |form| %>
-  <% @book_ids.each do |id| %>
+  <% @order.book_ids.each do |id| %>
     <%= form.hidden_field :book_ids, multiple: true, value: id %>
   <% end %>
 
