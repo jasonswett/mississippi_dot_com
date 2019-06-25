@@ -2,18 +2,18 @@ require 'rails_helper'
 
 RSpec.feature 'Create order', type: :feature do
   scenario 'when books are selected' do
-    create(:book, name: 'Growing Object-Oriented Software, Guided by Tests')
-    create(:book, name: 'Test-Driven Development by Example')
+    book_1 = create(:book)
+    book_2 = create(:book)
 
     visit new_order_path
     fill_in 'Customer email', with: 'test@example.com'
-    check 'Growing Object-Oriented Software, Guided by Tests'
-    check 'Test-Driven Development by Example'
+    check book_1.name
+    check book_2.name
     click_on 'Create Order'
 
     visit orders_path
-    expect(page).to have_content('Growing Object-Oriented Software, Guided by Tests')
-    expect(page).to have_content('Test-Driven Development by Example')
+    expect(page).to have_content(book_1.name)
+    expect(page).to have_content(book_1.name)
   end
 
   scenario 'customer email is missing' do
@@ -43,10 +43,10 @@ RSpec.feature 'Create order', type: :feature do
 
   scenario 'customer exists and is not signed in yet' do
     user = create(:user, email: 'test@example.com')
-    create(:book, name: 'Enlightenment Now')
+    book = create(:book)
 
     visit new_order_path
-    check 'Enlightenment Now'
+    check book.name
     fill_in 'Customer email', with: 'test@example.com'
     click_on 'Create Order'
 
