@@ -23,13 +23,11 @@ RSpec.feature 'Create order', type: :feature do
   end
 
   scenario 'customer email is missing and order ultimately gets created' do
-    book_1 = create(:book)
-    book_2 = create(:book)
+    book = create(:book)
 
     visit new_order_path
     fill_in 'Customer email', with: ''
-    check book_1.name
-    check book_2.name
+    check book.name
     click_on 'Create Order'
 
     expect(page).to have_content("Customer can't be blank")
@@ -37,8 +35,7 @@ RSpec.feature 'Create order', type: :feature do
     click_on 'Create Order'
 
     visit orders_path
-    expect(page).to have_content(book_1.name)
-    expect(page).to have_content(book_2.name)
+    expect(page).to have_content(book.name)
   end
 
   scenario 'customer exists and is not signed in yet' do
