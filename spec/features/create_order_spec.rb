@@ -1,19 +1,22 @@
 require 'rails_helper'
 
 RSpec.feature 'Create order', type: :feature do
-  scenario 'when books are selected' do
-    book_1 = create(:book)
-    book_2 = create(:book)
+  describe 'valid inputs' do
+    before do
+      @book_1 = create(:book)
+      @book_2 = create(:book)
+      @order_form = OrderForm.new
+      visit new_order_path
+    end
 
-    visit new_order_path
-    fill_in 'Customer email', with: 'test@example.com'
-    check book_1.name
-    check book_2.name
-    click_on 'Create Order'
+    scenario 'when books are selected' do
+      @order_form.fill(customer_email: 'test@example.com')
+        .select_books(@book_1.name, @book_2.name)
+        .submit
 
-    visit orders_path
-    expect(page).to have_content(book_1.name)
-    expect(page).to have_content(book_1.name)
+      expect(page).to have_content(@book_1.name)
+      expect(page).to have_content(@book_1.name)
+    end
   end
 
   scenario 'customer email is missing' do
