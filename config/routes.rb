@@ -7,8 +7,12 @@ Rails.application.routes.draw do
   end
 
   resources :customers
-  resources :books
   resources :authors
   devise_for :users
+
+  namespace :admin do
+    resources :books
+  end
+
   root 'orders#index'
 end
