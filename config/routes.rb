@@ -7,11 +7,11 @@ Rails.application.routes.draw do
   end
 
   resources :customers
-  resources :authors
   devise_for :users
 
   namespace :admin do
     resources :books
+    resources :authors
   end
 
   root 'orders#index'
