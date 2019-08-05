@@ -17,6 +17,7 @@ RSpec.feature 'Create order', type: :feature do
   end
 
   scenario 'customer email is missing' do
+    sleep(5)
     visit new_order_path
     click_on 'Create Order'
     expect(page).to have_content("Customer can't be blank")

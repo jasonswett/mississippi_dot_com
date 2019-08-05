@@ -6,5 +6,6 @@ RSpec.feature 'Update book', type: :feature do
     visit edit_admin_book_path(book)
     fill_in 'Name', with: ''
     click_on 'Update Book'
+    sleep(5)
   end
 end

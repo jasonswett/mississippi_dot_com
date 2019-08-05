@@ -20,6 +20,7 @@ RSpec.feature 'Create book', type: :feature do
   end
 
   scenario 'invalid attributes' do
+    sleep(5)
     visit new_admin_book_path
     click_on 'Create Book'
     expect(page).to have_content("Name can't be blank")

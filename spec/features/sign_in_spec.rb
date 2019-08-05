@@ -18,5 +18,6 @@ RSpec.feature 'Sign in', type: :feature do
     click_on 'Log in'
 
     expect(page).to have_content('Invalid Email or password.')
+    sleep(5)
   end
 end
