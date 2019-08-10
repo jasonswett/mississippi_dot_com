@@ -13,7 +13,12 @@ SSHKit::Backend::Netssh.configure do |ssh|
   }
 end
 
-on ["ec2-18-223-30-210.us-east-2.compute.amazonaws.com"], in: :parallel do |host|
+URLS = [
+  "ec2-3-15-178-9.us-east-2.compute.amazonaws.com",
+  "ec2-18-223-30-210.us-east-2.compute.amazonaws.com",
+]
+
+on URLS, in: :parallel do |host|
   within "/home/ec2-user/mississippi_dot_com" do
     execute :sudo, 'docker-compose run web bundle exec rspec'
   end
