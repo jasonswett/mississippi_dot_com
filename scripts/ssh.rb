@@ -14,12 +14,7 @@ SSHKit::Backend::Netssh.configure do |ssh|
 end
 
 on ["ec2-18-223-30-210.us-east-2.compute.amazonaws.com"], in: :parallel do |host|
-  puts "Now executing on #{host}"
   within "/home/ec2-user/mississippi_dot_com" do
-    as 'ec2-user' do
-      with RAILS_ENV: 'test' do
-        execute :sudo, 'docker-compose run web bundle exec rspec'
-      end
-    end
+    execute :sudo, 'docker-compose run web bundle exec rspec'
   end
 end
