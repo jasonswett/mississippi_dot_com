@@ -1,15 +1,6 @@
 version: '3'
 services:
-  db:
+  postgres:
     image: postgres
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
   web:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    volumes:
-      - .:/myapp
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
+    image: 588695668471.dkr.ecr.us-east-2.amazonaws.com/magic-test-2:latest
