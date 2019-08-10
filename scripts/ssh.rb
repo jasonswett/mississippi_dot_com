@@ -15,15 +15,12 @@ end
 
 SSHKit.config.output_verbosity = :debug
 
-hosts = [
-  "ec2-3-15-178-9.us-east-2.compute.amazonaws.com",
-  "ec2-18-223-30-210.us-east-2.compute.amazonaws.com"
-]
+require 'json'
+hosts = JSON.parse(`./scripts/dns_names.sh`)
+test_file_paths = (`ls -1 #{Dir.getwd}/spec/models`).split("\n").map { |f| "spec/models/#{f}" }
 
-test_file_paths = [
-  "spec/models/author_spec.rb",
-  "spec/models/book_spec.rb"
-]
+puts "Number of test files: #{test_file_paths.count}"
+puts "Number of available EC2 instances: #{hosts.count}"
 
 mappings = {}
 
