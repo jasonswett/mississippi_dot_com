@@ -17,7 +17,7 @@ SSHKit.config.output_verbosity = :debug
 
 require 'json'
 hosts = JSON.parse(`./scripts/dns_names.sh`)
-test_file_paths = (`ls -1 #{Dir.getwd}/spec/models`).split("\n").map { |f| "spec/models/#{f}" }
+test_file_paths = (`find #{Dir.getwd}/spec -name '*_spec.rb'`).split("\n").map { |f| f.gsub(/#{Dir.getwd}\//, '') }
 
 puts "Number of test files: #{test_file_paths.count}"
 puts "Number of available EC2 instances: #{hosts.count}"
