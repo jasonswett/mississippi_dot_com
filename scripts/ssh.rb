@@ -13,6 +13,8 @@ SSHKit::Backend::Netssh.configure do |ssh|
   }
 end
 
+SSHKit.config.output_verbosity = :debug
+
 URLS = [
   "ec2-3-15-178-9.us-east-2.compute.amazonaws.com",
   "ec2-18-223-30-210.us-east-2.compute.amazonaws.com",
