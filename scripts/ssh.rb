@@ -15,13 +15,13 @@ end
 
 SSHKit.config.output_verbosity = :debug
 
-URLS = [
-  "ec2-3-15-178-9.us-east-2.compute.amazonaws.com",
-  "ec2-18-223-30-210.us-east-2.compute.amazonaws.com",
-]
+MAPPINGS = {
+  "ec2-3-15-178-9.us-east-2.compute.amazonaws.com" => "spec/models/author_spec.rb",
+  "ec2-18-223-30-210.us-east-2.compute.amazonaws.com" => "spec/models/book_spec.rb"
+}
 
-on URLS, in: :parallel do |host|
+on MAPPINGS.keys, in: :parallel do |host|
   within "/home/ec2-user/mississippi_dot_com" do
-    execute :sudo, 'docker-compose run web bundle exec rspec spec/models/author_spec.rb'
+    execute :sudo, "docker-compose run web bundle exec rspec #{MAPPINGS[host]}"
   end
 end
