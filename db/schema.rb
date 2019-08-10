@@ -13,8 +13,6 @@
 ActiveRecord::Schema.define(version: 2018_10_28_154002) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plperl"
-  enable_extension "plperlu"
   enable_extension "plpgsql"
 
   create_table "authors", force: :cascade do |t|

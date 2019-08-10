@@ -1,0 +1,6 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+  web:
+    image: 588695668471.dkr.ecr.us-east-2.amazonaws.com/magic-test-2:latest
