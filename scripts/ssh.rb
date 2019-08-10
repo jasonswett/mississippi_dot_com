@@ -20,6 +20,6 @@ URLS = [
 
 on URLS, in: :parallel do |host|
   within "/home/ec2-user/mississippi_dot_com" do
-    execute :sudo, 'docker-compose run web bundle exec rspec'
+    execute :sudo, 'docker-compose run web bundle exec rspec spec/models/author_spec.rb'
   end
 end
