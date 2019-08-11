@@ -20,8 +20,6 @@ hosts = JSON.parse(`./scripts/dns_names.sh`).select { |h| h.length > 0 }
 
 on hosts, in: :parallel do |host|
   within "/home/ec2-user/mississippi_dot_com" do
-    puts host
-    execute :sudo, 'git checkout branch suite-magic'
     execute :sudo, 'git pull'
   end
 end
