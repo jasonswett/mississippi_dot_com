@@ -2,7 +2,17 @@
 
 require 'json'
 
-command = 'aws ec2 run-instances --profile=personal --launch-template LaunchTemplateId=lt-0ce14fe3496d931df,Version=1'
+LAUNCH_TEMPLATE = 'lt-04347576fe32b0712'
+
+command = [
+  'aws ec2 run-instances --profile=personal',
+  "--count #{ARGV[0] || 1}",
+  "--launch-template LaunchTemplateId=#{LAUNCH_TEMPLATE}"
+].join(' ')
+
+puts command
 info = JSON.parse(`#{command}`)
 
-puts info['Instances'][0]['InstanceId']
+info['Instances'].each do |instance|
+  puts instance['InstanceId']
+end

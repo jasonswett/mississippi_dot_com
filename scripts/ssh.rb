@@ -16,8 +16,11 @@ end
 SSHKit.config.output_verbosity = :debug
 
 require 'json'
-hosts = JSON.parse(`./scripts/dns_names.sh`)
-test_file_paths = (`find #{Dir.getwd}/spec -name '*_spec.rb'`).split("\n").map { |f| f.gsub(/#{Dir.getwd}\//, '') }
+hosts = JSON.parse(`./scripts/dns_names.sh`).select { |h| h.length > 0 }
+
+test_file_paths = (`find #{Dir.getwd}/spec -name '*_spec.rb'`)
+  .split("\n")
+  .map { |f| f.gsub(/#{Dir.getwd}\//, '') }
 
 puts "Number of test files: #{test_file_paths.count}"
 puts "Number of available EC2 instances: #{hosts.count}"
@@ -30,6 +33,7 @@ end
 
 on mappings.keys, in: :parallel do |host|
   within "/home/ec2-user/mississippi_dot_com" do
+    puts host
     execute :sudo, "docker-compose run web bundle exec rspec #{mappings[host]}"
   end
 end
