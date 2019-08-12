@@ -27,7 +27,7 @@ puts "Number of available EC2 instances: #{hosts.count}"
 
 mappings = {}
 
-hosts.each_with_index do |host, index|
+hosts[0..(test_file_paths.count - 1)].each_with_index do |host, index|
   mappings[host] = test_file_paths[index]
 end
 
@@ -37,3 +37,5 @@ on mappings.keys, in: :parallel do |host|
     execute :sudo, "docker-compose run web bundle exec rspec #{mappings[host]}"
   end
 end
+
+puts "#{test_file_paths.count} test files"
