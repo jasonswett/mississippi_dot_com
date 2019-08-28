@@ -3,7 +3,7 @@
 require 'json'
 
 LAUNCH_TEMPLATE = 'lt-04347576fe32b0712'
-LAUNCH_TEMPLATE_VERSION = 1
+LAUNCH_TEMPLATE_VERSION = 3
 
 command = [
   'aws ec2 run-instances --profile=personal',
