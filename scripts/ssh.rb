@@ -4,6 +4,9 @@ require 'sshkit'
 require 'sshkit/dsl'
 include SSHKit::DSL
 
+require 'net/http'
+require 'json'
+
 SSHKit::Backend::Netssh.configure do |ssh|
   ssh.connection_timeout = 30
   ssh.ssh_options = {
@@ -16,7 +19,13 @@ end
 SSHKit.config.output_verbosity = :debug
 
 require 'json'
-hosts = JSON.parse(`./scripts/dns_names.sh`).select { |h| h.length > 0 }
+
+uri = URI('http://www.suitemagic.io/api/v1/instances')
+response = Net::HTTP.get(uri)
+
+hosts = JSON.parse(response).map do |instance|
+  instance['public_hostname']
+end
 
 test_file_paths = (`find #{Dir.getwd}/spec -name '*_spec.rb'`)
   .split("\n")
