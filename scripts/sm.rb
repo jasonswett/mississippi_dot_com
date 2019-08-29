@@ -11,3 +11,4 @@ hosts = JSON.parse(response).map do |instance|
 end
 
 puts hosts
+puts "#{hosts.count} ready instances"
