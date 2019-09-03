@@ -39,12 +39,15 @@ hosts[0..([test_file_paths.count, hosts.count].min - 1)].each_with_index do |hos
   mappings[host] = test_file_paths[index]
 end
 
+suite_run_uuid = SecureRandom.uuid
+
 on mappings.keys, in: :parallel do |host|
   within "/home/ec2-user/mississippi_dot_com" do
     puts host
     file_path = mappings[host]
+
     execute :sudo, "docker-compose run web bundle exec rspec #{file_path}"
-    execute :suite_magic, "$(curl http://169.254.169.254/latest/meta-data/instance-id) #{file_path} $?"
+    execute :sudo, "docker-compose run web ruby scripts/suite_magic.rb #{suite_run_uuid} $(curl http://169.254.169.254/latest/meta-data/public-hostname) #{file_path} $?"
   end
 end
 

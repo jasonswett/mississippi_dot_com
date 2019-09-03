@@ -5,14 +5,14 @@ require 'json'
 require 'securerandom'
 
 BASE_URL = "http://www.suitemagic.io/api/v1"
-suite_run_uuid = SecureRandom.uuid
+suite_run_uuid = ARGV[0]
 uri = URI("#{BASE_URL}/suite_runs/#{suite_run_uuid}/test_runs")
 
 params = {
   test_run: {
-    instance_url: ARGV[0],
-    file_path: ARGV[1],
-    exit_code: ARGV[2],
+    instance_url: ARGV[1],
+    file_path: ARGV[2],
+    exit_code: ARGV[3],
     output: 'wee'
   }
 }
