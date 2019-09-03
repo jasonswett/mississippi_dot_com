@@ -39,23 +39,12 @@ hosts[0..([test_file_paths.count, hosts.count].min - 1)].each_with_index do |hos
   mappings[host] = test_file_paths[index]
 end
 
-suite_run_uuid = SecureRandom.uuid
-uri = URI("http://www.suitemagic.io/api/v1/suite_runs/#{suite_run_uuid}/test_runs")
-
-# first question:
-# can a ruby script just manually hit POST test_runs and create a test run?
-# also, there needs to be a place where test runs are viewable
-
 on mappings.keys, in: :parallel do |host|
   within "/home/ec2-user/mississippi_dot_com" do
     puts host
     file_path = mappings[host]
     execute :sudo, "docker-compose run web bundle exec rspec #{file_path}"
-
-    #cmd = "-d \"test_run[instance_url]=$(curl http://169.254.169.254/latest/meta-data/instance-id)&test_run[exit_code]=0&test_run[output]=wee&test_run[file_path]=#{file_path}\" -X POST #{uri}"
-    #execute :curl, cmd
-
-    # get remote host to hit SM API to create test run - only care about exit code now
+    execute :suite_magic, "$(curl http://169.254.169.254/latest/meta-data/instance-id) #{file_path} $?"
   end
 end
 
