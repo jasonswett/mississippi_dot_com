@@ -18,7 +18,6 @@ RSpec.describe Order, type: :model do
       )
 
       expect(order.total_cents).to eq(7500)
-      expect(1).to eq(2)
     end
   end
 end
