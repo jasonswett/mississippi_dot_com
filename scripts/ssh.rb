@@ -46,7 +46,7 @@ on mappings.keys, in: :parallel do |host|
     puts host
     file_path = mappings[host]
 
-    execute :git, 'pull'
+    execute :sudo, 'docker-compose run web git pull --no-edit'
     execute :sudo, "docker-compose run web bundle exec rspec #{file_path}"
     execute :sudo, "docker-compose run web ruby scripts/suite_magic.rb #{suite_run_uuid} $(curl http://169.254.169.254/latest/meta-data/public-hostname) #{file_path} $?"
   end
