@@ -17,7 +17,7 @@ SSHKit::Backend::Netssh.configure do |ssh|
   }
 end
 
-SSHKit.config.output_verbosity = :debug
+#SSHKit.config.output_verbosity = :debug
 
 uri = URI('http://www.suitemagic.io/api/v1/instances')
 response = Net::HTTP.get(uri)
@@ -47,8 +47,16 @@ on mappings.keys, in: :parallel do |host|
     file_path = mappings[host]
 
     execute :sudo, 'docker-compose run web git pull --no-edit'
-    execute :sudo, "docker-compose run web bundle exec rspec #{file_path}"
-    execute :sudo, "docker-compose run web ruby scripts/suite_magic.rb #{suite_run_uuid} $(curl http://169.254.169.254/latest/meta-data/public-hostname) #{file_path} $?"
+
+    last_exit_code = '$?'
+
+    begin
+      execute :sudo, "docker-compose run web bundle exec rspec #{file_path}"
+    rescue StandardError
+      last_exit_code = '1'
+    end
+
+    execute :sudo, "docker-compose run web ruby scripts/suite_magic.rb #{suite_run_uuid} $(curl http://169.254.169.254/latest/meta-data/public-hostname) #{file_path} #{last_exit_code}"
   end
 end
 
