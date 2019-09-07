@@ -4,7 +4,7 @@ require 'sshkit'
 require 'sshkit/dsl'
 include SSHKit::DSL
 
-require 'net/http'
+require 'net/https'
 require 'json'
 require 'securerandom'
 
