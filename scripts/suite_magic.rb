@@ -4,14 +4,13 @@ require 'net/https'
 require 'json'
 require 'securerandom'
 
+suite_run_uuid = ARGV[0]
 BASE_URL = "https://www.suitemagic.io/api/v1"
+uri = URI("#{BASE_URL}/suite_runs/#{suite_run_uuid}/test_runs")
 
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-suite_run_uuid = ARGV[0]
-uri = URI("#{BASE_URL}/suite_runs/#{suite_run_uuid}/test_runs")
 
 params = {
   test_run: {
