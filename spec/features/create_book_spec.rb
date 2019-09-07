@@ -23,5 +23,6 @@ RSpec.feature 'Create book', type: :feature do
     visit new_admin_book_path
     click_on 'Create Book'
     expect(page).to have_content("Name can't be blank")
+    expect(1).to eq(2)
   end
 end
