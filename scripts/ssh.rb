@@ -19,10 +19,17 @@ end
 
 #SSHKit.config.output_verbosity = :debug
 
-uri = URI('http://www.suitemagic.io/api/v1/instances')
-response = Net::HTTP.get(uri)
+uri = URI('https://www.suitemagic.io/api/v1/instances')
 
-hosts = JSON.parse(response).map do |instance|
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(uri.request_uri)
+request.basic_auth('jason', 'sufficientlysecurepassword')
+response = http.request(request)
+
+hosts = JSON.parse(response.body).map do |instance|
   instance['public_hostname']
 end
 
