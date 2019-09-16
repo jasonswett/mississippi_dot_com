@@ -19,7 +19,7 @@ end
 
 #SSHKit.config.output_verbosity = :debug
 
-uri = URI('https://www.suitemagic.io/api/v1/instances')
+uri = URI('https://app.suitemagic.io/api/v1/instances')
 
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true

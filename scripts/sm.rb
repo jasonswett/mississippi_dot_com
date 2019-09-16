@@ -3,7 +3,7 @@
 require 'net/http'
 require 'json'
 
-uri = URI('http://www.suitemagic.io/api/v1/instances')
+uri = URI('http://app.suitemagic.io/api/v1/instances')
 response = Net::HTTP.get(uri)
 
 hosts = JSON.parse(response).map do |instance|
